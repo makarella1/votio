@@ -2,7 +2,7 @@ import { Module, DynamicModule } from '@nestjs/common';
 import { FactoryProvider, ModuleMetadata } from '@nestjs/common/interfaces';
 import IORedis, { Redis, RedisOptions } from 'ioredis';
 
-const IO_REDIS_KEY = 'IORedis';
+export const IO_REDIS_KEY = 'IORedis';
 
 // Well, that's tricky...
 

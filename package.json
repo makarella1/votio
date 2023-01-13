@@ -5,13 +5,14 @@
   "main": "index.js",
   "workspaces": [
     "client",
-    "server"
+    "server",
+    "shared"
   ],
   "scripts": {
     "docker:compose": "docker-compose up -d",
     "client:dev": "npm run dev --workspace=client",
-    "server:dev": "wait-on tcp:6379 && npm run dev --workspace=server",
-    "start": "concurrently \"npm run docker:compose\" \"npm run client:dev\" \"npm run server:dev\"",
+    "server:dev": "npm run dev --workspace=server",
+    "start": "concurrently \"npm run client:dev\" \"npm run server:dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
