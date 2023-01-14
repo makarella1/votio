@@ -9,7 +9,7 @@ import Redis from 'ioredis';
 
 import { IO_REDIS_KEY } from '../../redis/redis.module';
 import { Poll } from 'shared';
-import { AddVoterData, CreatePollData } from '../lib';
+import { AuthPayload, CreatePollData } from '../lib';
 
 @Injectable()
 export class PollsRepository {
@@ -85,7 +85,7 @@ export class PollsRepository {
     }
   }
 
-  async addVoter({ pollId, userId, name }: AddVoterData): Promise<Poll> {
+  async addVoter({ pollId, userId, name }: AuthPayload): Promise<Poll> {
     this.logger.log(
       `Attempting to add a participant with userId/name of ${userId}/${name} to a poll ${pollId}`,
     );
