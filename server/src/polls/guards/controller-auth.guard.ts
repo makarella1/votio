@@ -17,8 +17,6 @@ export class ControllerAuthGuard implements CanActivate {
 
     const { accessToken } = request.body;
 
-    console.log(accessToken);
-
     try {
       const { sub, name, pollId } = this.jwtService.verify(
         accessToken,

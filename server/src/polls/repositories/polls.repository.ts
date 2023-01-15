@@ -35,6 +35,7 @@ export class PollsRepository {
       votesPerVoter,
       voters: {},
       adminId: userId,
+      hasStarted: false,
     };
 
     this.logger.log(
@@ -111,6 +112,23 @@ export class PollsRepository {
       this.logger.debug(
         `Failed to add a participant with userId/name of ${userId}/${name} to a poll ${pollId}\n${error}`,
       );
+
+      throw new InternalServerErrorException();
+    }
+  }
+
+  async removeVoter(pollId: string, userId: string): Promise<Poll> {
+    const key = `polls:${pollId}`;
+    const path = `.voters.${userId}`;
+
+    try {
+      await this.redisClient.sendCommand(
+        new Redis.Command('JSON.DEL', [key, path]),
+      );
+
+      return this.getPoll(pollId);
+    } catch (error) {
+      this.logger.error(`Failed to remove user with ID: ${userId}.\n${error}`);
 
       throw new InternalServerErrorException();
     }
