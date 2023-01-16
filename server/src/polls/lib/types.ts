@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { Nomination } from 'shared';
 import { Socket } from 'socket.io';
 
 export interface CreatePollData {
@@ -6,6 +7,18 @@ export interface CreatePollData {
   topic: string;
   votesPerVoter: number;
   userId: string;
+}
+
+export interface AddNominationData {
+  pollId: string;
+  nominationId: string;
+  nomination: Nomination;
+}
+
+export interface AddNominationFields {
+  pollId: string;
+  userId: string;
+  text: string;
 }
 
 export interface AuthPayload {

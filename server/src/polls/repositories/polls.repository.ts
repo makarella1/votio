@@ -9,7 +9,7 @@ import Redis from 'ioredis';
 
 import { IO_REDIS_KEY } from '../../redis/redis.module';
 import { Poll } from 'shared';
-import { AuthPayload, CreatePollData } from '../lib';
+import { AddNominationData, AuthPayload, CreatePollData } from '../lib';
 
 @Injectable()
 export class PollsRepository {
@@ -34,6 +34,7 @@ export class PollsRepository {
       topic,
       votesPerVoter,
       voters: {},
+      nominations: {},
       adminId: userId,
       hasStarted: false,
     };
@@ -99,15 +100,7 @@ export class PollsRepository {
         new Redis.Command('JSON.SET', [key, voterPath, JSON.stringify(name)]),
       );
 
-      const pollJSON = (await this.redisClient.sendCommand(
-        new Redis.Command('JSON.GET', [key, '.']),
-      )) as string;
-
-      const poll = JSON.parse(pollJSON) as Poll;
-
-      this.logger.debug(`Voters for poll ${pollId}: `, poll.voters);
-
-      return poll;
+      return this.getPoll(pollId);
     } catch (error) {
       this.logger.debug(
         `Failed to add a participant with userId/name of ${userId}/${name} to a poll ${pollId}\n${error}`,
@@ -131,6 +124,46 @@ export class PollsRepository {
       this.logger.error(`Failed to remove user with ID: ${userId}.\n${error}`);
 
       throw new InternalServerErrorException();
+    }
+  }
+
+  async addNomination({
+    pollId,
+    nominationId,
+    nomination,
+  }: AddNominationData): Promise<Poll> {
+    try {
+      const key = `polls:${pollId}`;
+      const path = `.nominations.${nominationId}`;
+
+      await this.redisClient.sendCommand(
+        new Redis.Command('JSON.SET', [key, path, JSON.stringify(nomination)]),
+      );
+
+      return this.getPoll(pollId);
+    } catch (error) {
+      this.logger.error(`Failed to add a nomination with ID: ${nominationId}`);
+
+      throw new InternalServerErrorException('Failed to add a nomination!');
+    }
+  }
+
+  async removeNomination(pollId: string, nominationId: string): Promise<Poll> {
+    try {
+      const key = `polls:${pollId}`;
+      const path = `.nominations.${nominationId}`;
+
+      await this.redisClient.sendCommand(
+        new Redis.Command('JSON.DEL', [key, path]),
+      );
+
+      return this.getPoll(pollId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to remove a nomination with ID: ${nominationId}`,
+      );
+
+      throw new InternalServerErrorException('Failed to remove a nomination!');
     }
   }
 }

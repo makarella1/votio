@@ -1,4 +1,5 @@
-import { Logger, UseFilters, UseGuards } from '@nestjs/common';
+import { ValidationPipe } from '@nestjs/common/pipes';
+import { Logger, UseFilters, UseGuards, UsePipes } from '@nestjs/common';
 import {
   WebSocketGateway,
   OnGatewayInit,
@@ -14,8 +15,10 @@ import { SocketWithAuth } from '../lib';
 import { PollsService } from '../services';
 import { WsCatchAllFilter } from '../exceptions';
 import { GatewayAdminGuard } from '../guards';
+import { AddNominationDto } from '../dto';
 
 @UseFilters(new WsCatchAllFilter())
+@UsePipes(new ValidationPipe())
 @WebSocketGateway({ namespace: 'polls' })
 export class PollsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
@@ -90,5 +93,41 @@ export class PollsGateway
     if (updatedPoll) {
       this.io.to(client.pollId).emit('poll_updated', updatedPoll);
     }
+  }
+
+  @SubscribeMessage('nominate')
+  async nominate(
+    @MessageBody() { text }: AddNominationDto,
+    @ConnectedSocket() { pollId, userId }: SocketWithAuth,
+  ) {
+    this.logger.debug(
+      `Attempting to add a nomination for user: "${userId}", poll: "${pollId}", nomination: "${text}"`,
+    );
+
+    const updatedPoll = await this.pollsService.addNomination({
+      text,
+      pollId,
+      userId,
+    });
+
+    this.io.to(pollId).emit('poll_updated', updatedPoll);
+  }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('remove_nomination')
+  async removeNomination(
+    @MessageBody('nominationId') nominationId: string,
+    @ConnectedSocket() { pollId }: SocketWithAuth,
+  ) {
+    this.logger.debug(
+      `Attempting to remove a nomination with id: "${nominationId}"`,
+    );
+
+    const updatedPoll = await this.pollsService.removeNomination(
+      pollId,
+      nominationId,
+    );
+
+    this.io.to(pollId).emit('poll_updated', updatedPoll);
   }
 }

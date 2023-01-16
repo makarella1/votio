@@ -1,3 +1,12 @@
+export interface Nomination {
+  userId: string;
+  text: string;
+}
+
+export interface Nominations {
+  [nominationId: string]: Nomination;
+}
+
 export interface Voters {
   [voterId: string]: string;
 }
@@ -9,4 +18,5 @@ export interface Poll {
   voters: Voters;
   adminId: string;
   hasStarted: boolean;
+  nominations: Nominations;
 }
