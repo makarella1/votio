@@ -15,7 +15,7 @@ import { SocketWithAuth } from '../lib';
 import { PollsService } from '../services';
 import { WsCatchAllFilter } from '../exceptions';
 import { GatewayAdminGuard } from '../guards';
-import { AddNominationDto } from '../dto';
+import { AddNominationDto, AddRankingsDto } from '../dto';
 
 @UseFilters(new WsCatchAllFilter())
 @UsePipes(new ValidationPipe())
@@ -127,6 +127,34 @@ export class PollsGateway
       pollId,
       nominationId,
     );
+
+    this.io.to(pollId).emit('poll_updated', updatedPoll);
+  }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('start_poll')
+  async startPoll(@ConnectedSocket() { pollId }: SocketWithAuth) {
+    this.logger.debug(`Attempting to start the poll with id: "${pollId}"`);
+
+    const updatedPoll = await this.pollsService.startPoll(pollId);
+
+    this.io.to(pollId).emit('poll_updated', updatedPoll);
+  }
+
+  @SubscribeMessage('add_rankings')
+  async addRankings(
+    @MessageBody() { rankings }: AddRankingsDto,
+    @ConnectedSocket() { pollId, userId }: SocketWithAuth,
+  ) {
+    this.logger.debug(
+      `Attempting to add rankings to the poll with id: "${pollId}"`,
+    );
+
+    const updatedPoll = await this.pollsService.addRankings({
+      pollId,
+      userId,
+      rankings,
+    });
 
     this.io.to(pollId).emit('poll_updated', updatedPoll);
   }

@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { CreatePollDto, JoinPollDto, RejoinPollDto } from '../dto';
 import {
   AddNominationFields,
+  AddRankingsData,
   AuthPayload,
   createNomianationId,
   createPollId,
@@ -101,5 +102,21 @@ export class PollsService {
 
   async removeNomination(pollId: string, nominationId: string) {
     return this.pollsRepository.removeNomination(pollId, nominationId);
+  }
+
+  async startPoll(pollId: string) {
+    return this.pollsRepository.startPoll(pollId);
+  }
+
+  async addRankings(addRankingsFields: AddRankingsData) {
+    const { hasStarted } = await this.pollsRepository.getPoll(
+      addRankingsFields.pollId,
+    );
+
+    if (!hasStarted) {
+      throw new BadRequestException("The poll hasn't been started yet!");
+    }
+
+    return this.pollsRepository.addRankings(addRankingsFields);
   }
 }

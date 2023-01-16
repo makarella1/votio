@@ -9,7 +9,12 @@ import Redis from 'ioredis';
 
 import { IO_REDIS_KEY } from '../../redis/redis.module';
 import { Poll } from 'shared';
-import { AddNominationData, AuthPayload, CreatePollData } from '../lib';
+import {
+  AddNominationData,
+  AddRankingsData,
+  AuthPayload,
+  CreatePollData,
+} from '../lib';
 
 @Injectable()
 export class PollsRepository {
@@ -35,6 +40,7 @@ export class PollsRepository {
       votesPerVoter,
       voters: {},
       nominations: {},
+      rankings: {},
       adminId: userId,
       hasStarted: false,
     };
@@ -164,6 +170,65 @@ export class PollsRepository {
       );
 
       throw new InternalServerErrorException('Failed to remove a nomination!');
+    }
+  }
+
+  async startPoll(pollId: string): Promise<Poll> {
+    this.logger.debug(
+      `Setting the "hasStarted" property for poll with id: "${pollId}"`,
+    );
+
+    const key = `polls:${pollId}`;
+
+    try {
+      await this.redisClient.sendCommand(
+        new Redis.Command('JSON.SET', [
+          key,
+          '.hasStarted',
+          JSON.stringify(true),
+        ]),
+      );
+
+      return this.getPoll(pollId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to set the "hasStarted" property for poll with id: "${pollId}"`,
+      );
+
+      throw new InternalServerErrorException(
+        'Something went wrong when starting the poll!',
+      );
+    }
+  }
+
+  async addRankings({
+    userId,
+    pollId,
+    rankings,
+  }: AddRankingsData): Promise<Poll> {
+    try {
+      this.logger.log(
+        `Attempting to add the rankings for user with id: "${userId}" and poll with id: "${pollId}"`,
+        rankings,
+      );
+
+      const key = `polls:${pollId}`;
+      const path = `.rankings.${userId}`;
+
+      await this.redisClient.sendCommand(
+        new Redis.Command('JSON.SET', [key, path, JSON.stringify(rankings)]),
+      );
+
+      return this.getPoll(pollId);
+    } catch (error) {
+      this.logger.error(
+        `Failed to add the rankings for user with id: "${userId}" and poll with id: "${pollId}"`,
+        rankings,
+      );
+
+      throw new InternalServerErrorException(
+        'Something went wrong when adding rankings',
+      );
     }
   }
 }

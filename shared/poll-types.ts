@@ -3,8 +3,14 @@ export interface Nomination {
   text: string;
 }
 
+type NominationId = string;
+
 export interface Nominations {
-  [nominationId: string]: Nomination;
+  [nominationId: NominationId]: Nomination;
+}
+
+export interface Rankings {
+  [userId: string]: NominationId[];
 }
 
 export interface Voters {
@@ -19,4 +25,5 @@ export interface Poll {
   adminId: string;
   hasStarted: boolean;
   nominations: Nominations;
+  rankings: Rankings;
 }

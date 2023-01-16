@@ -15,6 +15,14 @@ export interface AddNominationData {
   nomination: Nomination;
 }
 
+export interface AddRankingsData {
+  pollId: string;
+  userId: string;
+  rankings: string[];
+}
+
+export type AddRankingsFields = AddRankingsData;
+
 export interface AddNominationFields {
   pollId: string;
   userId: string;
