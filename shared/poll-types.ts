@@ -13,6 +13,12 @@ export interface Rankings {
   [userId: string]: NominationId[];
 }
 
+export type Results = Array<{
+  nominationId: NominationId;
+  nominationText: string;
+  score: number;
+}>;
+
 export interface Voters {
   [voterId: string]: string;
 }
@@ -26,4 +32,5 @@ export interface Poll {
   hasStarted: boolean;
   nominations: Nominations;
   rankings: Rankings;
+  results: Results;
 }

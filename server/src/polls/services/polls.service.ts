@@ -8,6 +8,7 @@ import {
   createNomianationId,
   createPollId,
   createUserId,
+  getResults,
 } from '../lib';
 import { PollsRepository } from '../repositories';
 
@@ -78,7 +79,7 @@ export class PollsService {
   async removeVoter(pollId: string, userId: string) {
     const poll = await this.getPoll(pollId);
 
-    if (!poll.hasStarted) {
+    if (poll && !poll.hasStarted) {
       return this.pollsRepository.removeVoter(pollId, userId);
     }
   }
@@ -118,5 +119,17 @@ export class PollsService {
     }
 
     return this.pollsRepository.addRankings(addRankingsFields);
+  }
+
+  async computeResults(pollId: string) {
+    const { rankings, nominations, votesPerVoter } = await this.getPoll(pollId);
+
+    const results = getResults(rankings, nominations, votesPerVoter);
+
+    return this.pollsRepository.addResults(pollId, results);
+  }
+
+  async deletePoll(pollId: string) {
+    this.pollsRepository.deletePoll(pollId);
   }
 }

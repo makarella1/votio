@@ -85,7 +85,7 @@ export class PollsGateway
     @ConnectedSocket() client: SocketWithAuth,
   ) {
     this.logger.debug(
-      `Attempting to remove voter ${id} from poll "${client.pollId}"`,
+      `Attempting to remove voter "${id}" from poll "${client.pollId}"`,
     );
 
     const updatedPoll = await this.pollsService.removeVoter(client.pollId, id);
@@ -157,5 +157,27 @@ export class PollsGateway
     });
 
     this.io.to(pollId).emit('poll_updated', updatedPoll);
+  }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('delete_poll')
+  async deletePoll(@ConnectedSocket() { pollId }: SocketWithAuth) {
+    this.logger.log(`Attempting to delete the poll with id: ${pollId}`);
+
+    await this.pollsService.deletePoll(pollId);
+
+    this.io.in(pollId).disconnectSockets();
+  }
+
+  @UseGuards(GatewayAdminGuard)
+  @SubscribeMessage('close_poll')
+  async computeResults(@ConnectedSocket() { pollId }: SocketWithAuth) {
+    this.logger.log(
+      `Attempting to compute the results for the poll with id: ${pollId}`,
+    );
+
+    const updatedPoll = await this.pollsService.computeResults(pollId);
+
+    this.io.in(pollId).emit('poll_updated', updatedPoll);
   }
 }
