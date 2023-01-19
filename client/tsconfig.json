@@ -14,8 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@pages/*": ["pages/*"],
+      "@shared/*": ["shared/*"]
+    }
   },
-  "include": ["src", "app/index.tsx", "main.tsx", "vite-env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

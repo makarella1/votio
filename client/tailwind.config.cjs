@@ -18,6 +18,11 @@ module.exports = {
           },
         },
       },
+      colors: {
+        primary: '#be123c',
+        secondary: '#f97316',
+        accent: '#ec4899',
+      },
     },
   },
   plugins: [],
