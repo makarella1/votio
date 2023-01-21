@@ -32,7 +32,6 @@ export class GatewayAdminGuard implements CanActivate {
 
       return true;
     } catch (error) {
-      console.log(error);
       throw new WsUnauthorizedException('Admin priveleges are required!');
     }
   }

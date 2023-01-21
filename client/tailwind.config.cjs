@@ -1,27 +1,27 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./index.html', './**/*.{js,ts,jsx,tsx}'],
+  content: ["./index.html", "./**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       animation: {
-        gradient: 'gradient 10s ease infinite',
+        gradient: "gradient 10s ease infinite",
+        appear: "appear 2s forwards",
       },
       keyframes: {
         gradient: {
-          '0%, 100%': {
-            'background-size': '200% 200%',
-            'background-position': 'left center',
+          "0%, 100%": {
+            "background-size": "200% 200%",
+            "background-position": "left center",
           },
-          '50%': {
-            'background-size': '200% 200%',
-            'background-position': 'right center',
+          "50%": {
+            "background-size": "200% 200%",
+            "background-position": "right center",
           },
         },
       },
       colors: {
-        primary: '#be123c',
-        secondary: '#f97316',
-        accent: '#ec4899',
+        primary: "#ec4899",
+        secondary: "#f97316",
       },
     },
   },

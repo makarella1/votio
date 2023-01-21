@@ -1,10 +1,10 @@
-import React from 'react';
-import { clsx } from 'clsx';
-import { Link } from 'wouter';
+import { clsx } from "clsx";
+import React from "react";
+import { Link } from "wouter";
 
-type ButtonType = 'primary' | 'secondary';
+type ButtonType = "primary" | "secondary";
 
-interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
+interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   variant: ButtonType;
   href?: string;
 }
@@ -13,10 +13,10 @@ export const Button = ({ children, variant, href, ...props }: ButtonProps) => {
   const button = (
     <button
       className={clsx(
-        'flex items-center justify-center font-bold bg-white rounded-xl p-6 border-2 hover:text-white hover:shadow-xl transition-all duration-200',
-        variant === 'primary' && 'text-accent border-accent hover:bg-accent',
-        variant === 'secondary' &&
-          'text-secondary border-secondary hover:bg-secondary',
+        "flex items-center justify-center rounded-xl border-2 bg-white p-6 font-bold transition-all duration-200 hover:text-white hover:shadow-xl",
+        variant === "primary" && "border-primary text-primary hover:bg-primary",
+        variant === "secondary" &&
+          "border-secondary text-secondary hover:bg-secondary",
       )}
       {...props}
     >

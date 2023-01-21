@@ -1,17 +1,23 @@
-import { Switch, Route } from 'wouter';
+import "./index.css";
 
-import { WelcomePage } from '@pages/welcome';
-import { CreatePollPage } from '@pages/create-poll';
-import { JoinPollPage } from '@pages/join-poll';
-
-import './index.css';
+import { CreatePollPage } from "@pages/create-poll";
+import { JoinPollPage } from "@pages/join-poll";
+import { WelcomePage } from "@pages/welcome";
+import { Routes } from "@shared/config/router";
+import { AnimatedRoute, Container } from "@shared/ui";
 
 const App = () => (
-  <Switch>
-    <Route path="/" component={WelcomePage} />
-    <Route path="/create-poll" component={CreatePollPage} />
-    <Route path="/join-poll" component={JoinPollPage} />
-  </Switch>
+  <Container>
+    <AnimatedRoute path={Routes.WELCOME}>
+      <WelcomePage />
+    </AnimatedRoute>
+    <AnimatedRoute path={Routes.CREATE_POLL}>
+      <CreatePollPage />
+    </AnimatedRoute>
+    <AnimatedRoute path={Routes.JOIN_POLL}>
+      <JoinPollPage />
+    </AnimatedRoute>
+  </Container>
 );
 
 export default App;

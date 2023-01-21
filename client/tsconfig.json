@@ -21,5 +21,14 @@
       "@shared/*": ["shared/*"]
     }
   },
+  "include": [
+    ".eslintrc.cjs",
+    "vite.config.ts",
+    "app",
+    "entities",
+    "shared",
+    "features",
+    "pages"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
