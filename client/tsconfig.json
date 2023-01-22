@@ -18,8 +18,10 @@
     "baseUrl": ".",
     "paths": {
       "@pages/*": ["pages/*"],
-      "@shared/*": ["shared/*"]
-    }
+      "@shared/*": ["shared/*"],
+      "@entities/*": ["entities/*"]
+    },
+    "types": ["vite/client"]
   },
   "include": [
     ".eslintrc.cjs",

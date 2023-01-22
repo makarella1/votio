@@ -8,10 +8,10 @@ export const WelcomePage = () => {
       </h1>
 
       <div className="flex items-center gap-10">
-        <Button variant="primary" href="/create-poll">
+        <Button variant="primary-outlined" href="/create-poll">
           Create a Poll
         </Button>
-        <Button variant="secondary" href="/join-poll">
+        <Button variant="secondary-outlined" href="/join-poll">
           Join an Existing Poll
         </Button>
       </div>
