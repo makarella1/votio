@@ -19,13 +19,15 @@
     "paths": {
       "@pages/*": ["pages/*"],
       "@shared/*": ["shared/*"],
-      "@entities/*": ["entities/*"]
+      "@entities/*": ["entities/*"],
+      "@features/*": ["features/*"]
     },
     "types": ["vite/client"]
   },
   "include": [
     ".eslintrc.cjs",
     "vite.config.ts",
+    "main.tsx",
     "app",
     "entities",
     "shared",

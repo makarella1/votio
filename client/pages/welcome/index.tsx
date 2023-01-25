@@ -1,4 +1,4 @@
-import { Button } from "@shared/ui";
+import { Button } from "@shared/ui/button";
 
 export const WelcomePage = () => {
   return (

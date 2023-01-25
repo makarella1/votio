@@ -4,7 +4,8 @@ import { CreatePollPage } from "@pages/create-poll";
 import { JoinPollPage } from "@pages/join-poll";
 import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
-import { AnimatedRoute, Container } from "@shared/ui";
+import { AnimatedRoute } from "@shared/ui/animated-route";
+import { Container } from "@shared/ui/container";
 
 const App = () => (
   <Container>

@@ -1,5 +1,5 @@
 export const Container = ({ children }: React.PropsWithChildren) => (
-  <main className="container mx-auto flex h-screen flex-col items-center justify-center">
+  <main className="mx-auto flex h-screen max-w-xl flex-col items-center justify-center">
     {children}
   </main>
 );
