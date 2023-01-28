@@ -1,7 +1,6 @@
+import { createPollModel } from "@features/create-poll/model";
 import { Button } from "@shared/ui/button";
 import { useStore } from "effector-react";
-
-import { createPollModel } from "../../model";
 
 interface VoteCounterProps {
   min: number;

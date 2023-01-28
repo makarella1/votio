@@ -1,30 +1,19 @@
-import { useForm } from "@shared/lib/hooks";
+import { MAX_VOTES, MIN_VOTES } from "@features/create-poll/lib/constants";
+import { createPollModel } from "@features/create-poll/model";
 import { Button } from "@shared/ui/button";
 import { Input } from "@shared/ui/input";
+import { useForm } from "effector-forms";
+import React from "react";
 
-import { MAX_VOTES, MIN_VOTES } from "../../lib/constants";
-import { createPollModel } from "../../model";
-import { VoteCounter } from "../vote-counter";
+import { VoteCounter } from "./vote-counter";
 
 export const CreatePollForm = () => {
-  const { handleFieldChange, form } = useForm(createPollModel.$pollForm);
+  const { fields, eachValid } = useForm(createPollModel.pollForm);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     createPollModel.pollCreated();
-  };
-
-  const areFieldsValid = () => {
-    if (form.name.length < 2 || form.name.length > 80) {
-      return false;
-    }
-
-    if (form.topic.length < 2 || form.topic.length > 120) {
-      return false;
-    }
-
-    return true;
   };
 
   return (
@@ -36,18 +25,22 @@ export const CreatePollForm = () => {
         <Input
           id="topic"
           label="What's the Poll's Topic?"
-          onChange={handleFieldChange("name")}
+          onChange={(event) => fields.topic.onChange(event.target.value)}
+          value={fields.topic.value}
         />
         <VoteCounter max={MAX_VOTES} min={MIN_VOTES} />
         <Input
           id="name"
           label="Enter Your Name"
-          onChange={handleFieldChange("topic")}
+          onChange={(event) => fields.name.onChange(event.target.value)}
+          value={fields.name.value}
         />
         <Button
           variant="primary"
           className="w-full"
-          disabled={!areFieldsValid()}
+          disabled={
+            !(fields.name.isTouched && fields.topic.isTouched && eachValid)
+          }
         >
           Create a Poll!
         </Button>

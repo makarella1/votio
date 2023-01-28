@@ -1,16 +1,29 @@
 import { pollModel } from "@entities/poll/model";
+import { rules } from "@shared/lib/validation-rules";
 import { combine, createEvent, createStore, sample } from "effector";
+import { createForm } from "effector-forms";
 
 import { AVG_VOTES, MAX_VOTES, MIN_VOTES } from "../lib/constants";
 
-interface PollFields {
+export interface PollFields {
   name: string;
   topic: string;
 }
 
-const INITIAL_POLL_FIELDS: PollFields = { name: "", topic: "" };
-
-export const $pollForm = createStore<PollFields>(INITIAL_POLL_FIELDS);
+export const pollForm = createForm<PollFields>({
+  fields: {
+    name: {
+      init: "",
+      rules: [rules.required(), rules.minLength(3)],
+      validateOn: ["change"],
+    },
+    topic: {
+      init: "",
+      rules: [rules.required(), rules.minLength(3)],
+      validateOn: ["change"],
+    },
+  },
+});
 
 export const $votesPerVoter = createStore(AVG_VOTES, {
   updateFilter: (votesPerVoter) =>
@@ -25,7 +38,7 @@ $votesPerVoter.on(voteAdded, (votesPerVoter) => votesPerVoter + 1);
 $votesPerVoter.on(voteRemoved, (votesPerVoter) => votesPerVoter - 1);
 
 const $pollData = combine(
-  $pollForm,
+  pollForm.$values,
   $votesPerVoter,
   (pollForm, votesPerVoter) => ({ ...pollForm, votesPerVoter }),
 );
