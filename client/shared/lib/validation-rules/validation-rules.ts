@@ -9,3 +9,8 @@ export const minLength = (minLength: number): Rule<string> => ({
   name: "minLength",
   validator: (value) => value.length >= minLength,
 });
+
+export const maxLength = (maxLength: number): Rule<string> => ({
+  name: "maxLength",
+  validator: (value) => value.length <= maxLength,
+});

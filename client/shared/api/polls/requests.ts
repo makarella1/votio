@@ -1,10 +1,14 @@
-import { Poll } from "shared";
-
 import { request } from "../lib/request";
-import { CreatePollBody } from "./types";
+import { CreatePollBody, JoinPollBody, Response } from "./types";
 
 export const createPoll = async (body: CreatePollBody) =>
-  await request<{ poll: Poll; accessToken: string }>("/polls", {
+  await request<Response>("/polls", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+export const joinPoll = async (body: JoinPollBody) =>
+  await request<Response>("/polls/join", {
     method: "POST",
     body: JSON.stringify(body),
   });

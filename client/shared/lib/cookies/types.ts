@@ -3,5 +3,6 @@ import Cookies from "js-cookie";
 export interface SetCookieParams {
   name: string;
   value: any;
-  attributes?: Cookies.CookieAttributes;
+  expires: number;
+  attributes?: Omit<Cookies.CookieAttributes, "expires">;
 }

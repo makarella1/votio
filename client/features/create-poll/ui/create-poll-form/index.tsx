@@ -13,38 +13,36 @@ export const CreatePollForm = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    createPollModel.pollCreated();
+    createPollModel.createPoll();
   };
 
   return (
-    <div className="h-2/4 w-full">
-      <form
-        className="flex flex-col gap-10 text-center text-lg font-bold"
-        onSubmit={handleSubmit}
+    <form
+      className="flex flex-col gap-10 text-center text-lg font-bold"
+      onSubmit={handleSubmit}
+    >
+      <Input
+        id="topic"
+        label="What's the Poll's Topic?"
+        onChange={(event) => fields.topic.onChange(event.target.value)}
+        value={fields.topic.value}
+      />
+      <VoteCounter max={MAX_VOTES} min={MIN_VOTES} />
+      <Input
+        id="name"
+        label="Enter Your Name"
+        onChange={(event) => fields.name.onChange(event.target.value)}
+        value={fields.name.value}
+      />
+      <Button
+        variant="primary"
+        className="w-full"
+        disabled={
+          !(fields.name.isTouched && fields.topic.isTouched && eachValid)
+        }
       >
-        <Input
-          id="topic"
-          label="What's the Poll's Topic?"
-          onChange={(event) => fields.topic.onChange(event.target.value)}
-          value={fields.topic.value}
-        />
-        <VoteCounter max={MAX_VOTES} min={MIN_VOTES} />
-        <Input
-          id="name"
-          label="Enter Your Name"
-          onChange={(event) => fields.name.onChange(event.target.value)}
-          value={fields.name.value}
-        />
-        <Button
-          variant="primary"
-          className="w-full"
-          disabled={
-            !(fields.name.isTouched && fields.topic.isTouched && eachValid)
-          }
-        >
-          Create a Poll!
-        </Button>
-      </form>
-    </div>
+        Create a Poll!
+      </Button>
+    </form>
   );
 };

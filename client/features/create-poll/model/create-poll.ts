@@ -4,11 +4,7 @@ import { combine, createEvent, createStore, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { AVG_VOTES, MAX_VOTES, MIN_VOTES } from "../lib/constants";
-
-export interface PollFields {
-  name: string;
-  topic: string;
-}
+import { PollFields } from "../lib/types";
 
 export const pollForm = createForm<PollFields>({
   fields: {

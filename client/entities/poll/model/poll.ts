@@ -1,32 +1,32 @@
 import { pollsApi } from "@shared/api/polls";
-import { CreatePollBody } from "@shared/api/polls/types";
+import { CreatePollBody, JoinPollBody } from "@shared/api/polls/types";
 import { cookies } from "@shared/lib/cookies";
-import { createEffect, createStore } from "effector";
+import { createEffect, createStore, merge } from "effector";
 import { Poll } from "shared";
 
 export const createPollFx = createEffect(
   async (body: CreatePollBody) => await pollsApi.createPoll(body),
 );
 
+export const joinPollFx = createEffect(
+  async (body: JoinPollBody) => await pollsApi.joinPoll(body),
+);
+
 const $poll = createStore<Poll | null>(null);
 
-export const $loading = createPollFx.pending;
-export const $hasPoll = $poll.map((poll) => poll !== null);
+export const $created = createStore(false);
 
-$poll.on(createPollFx.doneData, (_, { data: { poll } }) => poll);
+export const $createPollLoading = createPollFx.pending;
+export const $joinPollLoading = joinPollFx.pending;
 
-createPollFx.doneData.watch(({ data: { accessToken } }) => {
-  const expires = new Date(
-    new Date().getTime() + parseInt(import.meta.env.COOKIE_TTL),
-  );
+const joinedOrCreated = merge([joinPollFx.doneData, createPollFx.doneData]);
 
+$poll.on(joinedOrCreated, (_, { data: { poll } }) => poll);
+
+joinedOrCreated.watch(({ data: { accessToken } }) => {
   cookies.set({
     name: "accessToken",
     value: accessToken,
-    attributes: { expires },
+    expires: parseInt(import.meta.env.VITE_COOKIE_TTL),
   });
-});
-
-$poll.watch((poll) => {
-  console.log(poll);
 });

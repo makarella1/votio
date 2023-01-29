@@ -1,1 +1,1 @@
-export * as createPollModel from "./polls";
+export * as createPollModel from "./create-poll";
