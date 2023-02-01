@@ -4,12 +4,13 @@ import { Input } from "@shared/ui/input";
 import { useForm } from "effector-forms";
 
 export const JoinPollForm = () => {
-  const { fields, eachValid } = useForm(joinPollModel.joinPollForm);
+  const { fields, eachValid, reset } = useForm(joinPollModel.joinPollForm);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     joinPollModel.joinPoll();
+    reset();
   };
 
   return (

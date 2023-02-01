@@ -9,7 +9,7 @@ export interface JoinPollBody {
   pollId: string;
 }
 
-export interface Response {
+export interface PollResponse {
   poll: Poll;
   accessToken: string;
 }

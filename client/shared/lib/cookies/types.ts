@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
 
-export interface SetCookieParams {
+export interface CookieParams {
   name: string;
   value: any;
-  expires: number;
+  expires: Date;
   attributes?: Omit<Cookies.CookieAttributes, "expires">;
 }

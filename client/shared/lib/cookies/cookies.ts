@@ -1,9 +1,10 @@
+import { createEffect } from "effector";
 import Cookies from "js-cookie";
 
-import { SetCookieParams } from "./types";
+import { CookieParams } from "./types";
 
-export const set = ({ name, value, expires, attributes }: SetCookieParams) => {
-  const expiresDate = new Date(new Date().getTime() + expires);
-
-  Cookies.set(name, value, { expires: expiresDate, ...attributes });
-};
+export const setCookieFx = createEffect(
+  ({ name, value, expires, attributes }: CookieParams) => {
+    Cookies.set(name, value, { expires, ...attributes });
+  },
+);

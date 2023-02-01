@@ -8,12 +8,13 @@ import React from "react";
 import { VoteCounter } from "./vote-counter";
 
 export const CreatePollForm = () => {
-  const { fields, eachValid } = useForm(createPollModel.pollForm);
+  const { fields, eachValid, reset } = useForm(createPollModel.pollForm);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
     createPollModel.createPoll();
+    reset();
   };
 
   return (
