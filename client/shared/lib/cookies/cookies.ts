@@ -8,3 +8,5 @@ export const setCookieFx = createEffect(
     Cookies.set(name, value, { expires, ...attributes });
   },
 );
+
+export const get = (name: string) => Cookies.get(name);

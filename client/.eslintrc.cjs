@@ -27,6 +27,7 @@ module.exports = {
     "@typescript-eslint/semi": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-floating-promises": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
   },
