@@ -2,8 +2,14 @@ import { pollsApi } from "@shared/api/poll";
 import { CreatePollBody, JoinPollBody } from "@shared/api/poll/types";
 import { cookies } from "@shared/lib/cookies";
 import { CookieParams } from "@shared/lib/cookies/types";
-import { showToastFx } from "@shared/lib/notifications";
-import { createEffect, createStore, merge, sample } from "effector";
+import { notifications } from "@shared/lib/notifications";
+import {
+  createEffect,
+  createEvent,
+  createStore,
+  merge,
+  sample,
+} from "effector";
 import { Poll } from "shared";
 import { Socket } from "socket.io";
 
@@ -15,19 +21,16 @@ export const joinPollFx = createEffect(
   async (body: JoinPollBody) => await pollsApi.joinPoll(body),
 );
 
+const pollUpdated = createEvent<Poll>();
+
 export const listenToPollUpdatesFx = createEffect((socket: Socket) => {
-  let updatedPoll: Poll | null = null;
-
   socket.on("poll_updated", (poll: Poll) => {
-    updatedPoll = poll;
+    pollUpdated(poll);
   });
-
-  console.log(updatedPoll);
-
-  return updatedPoll;
 });
 
-const $poll = createStore<Poll | null>(null);
+export const $poll = createStore<Poll | null>(null);
+
 $poll.watch((poll) => {
   console.log(poll);
 });
@@ -39,7 +42,7 @@ const joinedOrCreated = merge([joinPollFx.doneData, createPollFx.doneData]);
 const failed = merge([joinPollFx.fail, createPollFx.fail]);
 
 $poll.on(joinedOrCreated, (_, { data: { poll } }) => poll);
-$poll.on(listenToPollUpdatesFx.doneData, (_, updatedPoll) => updatedPoll);
+$poll.on(pollUpdated, (_, updatedPoll) => updatedPoll);
 
 sample({
   clock: joinedOrCreated,
@@ -55,10 +58,10 @@ sample({
 
 sample({
   clock: joinedOrCreated,
-  target: showToastFx.prepend(() => ({ type: "success" })),
+  target: notifications.showToastFx.prepend(() => ({ type: "success" })),
 });
 
 sample({
   clock: failed,
-  target: showToastFx.prepend(() => ({ type: "error" })),
+  target: notifications.showToastFx.prepend(() => ({ type: "error" })),
 });

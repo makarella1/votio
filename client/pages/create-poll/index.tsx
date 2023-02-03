@@ -1,3 +1,3 @@
-import { CreatePoll } from "@features/create-poll/ui";
+import { CreatePoll } from "@widgets/create-poll";
 
 export const CreatePollPage = () => <CreatePoll />;

@@ -1,9 +1,22 @@
 import { socket } from "@shared/api/socket";
-import { createEffect, createStore } from "effector";
-import { Socket } from "socket.io";
+import { createEffect, createEvent, createStore } from "effector";
+
+import { Me, UserConnection } from "./types";
 
 export const initializeConnectionFx = createEffect(() => socket.getInstance());
 
-const $user = createStore<{ socket: Socket } | Record<string, unknown>>({});
+const $userConnection = createStore<UserConnection>({});
 
-$user.on(initializeConnectionFx.doneData, (_, socket) => ({ socket }));
+export const $me = createStore<Me>({});
+
+export const setMe = createEvent<Me>();
+
+$me.on(setMe, (_, me) => me);
+
+$me.watch((me) => {
+  console.log(me);
+});
+
+$userConnection.on(initializeConnectionFx.doneData, (_, socket) => ({
+  socket,
+}));

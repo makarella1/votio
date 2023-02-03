@@ -1,23 +1,26 @@
-import { joinPollModel } from "@features/join-poll/model";
 import { Button } from "@shared/ui/button";
+import { Form } from "@shared/ui/form";
 import { Input } from "@shared/ui/input";
 import { useForm } from "effector-forms";
 
-export const JoinPollForm = () => {
-  const { fields, eachValid, reset } = useForm(joinPollModel.joinPollForm);
+import { joinPollModel } from "../../model";
+
+interface JoinPollFormProps {
+  onSubmit: () => Promise<void>;
+}
+
+export const JoinPollForm = ({ onSubmit }: JoinPollFormProps) => {
+  const { fields, eachValid, reset } = useForm(joinPollModel.form);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    joinPollModel.joinPoll();
+    onSubmit();
     reset();
   };
 
   return (
-    <form
-      className="flex flex-col gap-10 text-center text-lg font-bold"
-      onSubmit={handleSubmit}
-    >
+    <Form onSubmit={handleSubmit}>
       <Input
         id="topic"
         label="Enter the Code From Your Friend To Join a Poll"
@@ -39,6 +42,6 @@ export const JoinPollForm = () => {
       >
         Join a Poll!
       </Button>
-    </form>
+    </Form>
   );
 };

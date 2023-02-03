@@ -1,12 +1,11 @@
 import { pollModel } from "@entities/poll/model";
 import { redirect, Routes } from "@shared/config/router";
 import { rules } from "@shared/lib/validation-rules";
-import { createEvent, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { JoinPollFields } from "../lib/types";
 
-export const joinPollForm = createForm<JoinPollFields>({
+export const form = createForm<JoinPollFields>({
   fields: {
     pollId: {
       init: "",
@@ -15,18 +14,10 @@ export const joinPollForm = createForm<JoinPollFields>({
     },
     name: {
       init: "",
-      rules: [rules.required(), rules.minLength(3)],
+      rules: [rules.required(), rules.minLength(3), rules.maxLength(30)],
       validateOn: ["change"],
     },
   },
-});
-
-export const joinPoll = createEvent();
-
-sample({
-  clock: joinPoll,
-  source: joinPollForm.$values,
-  target: pollModel.joinPollFx,
 });
 
 redirect({

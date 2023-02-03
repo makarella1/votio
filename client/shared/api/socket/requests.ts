@@ -1,5 +1,4 @@
 import { cookies } from "@shared/lib/cookies";
-import { Poll } from "shared";
 import { io, Socket } from "socket.io-client";
 
 const HOST = import.meta.env.VITE_API_HOST as string;
@@ -15,12 +14,6 @@ export const getInstance = (): Socket => {
     },
     transports: ["websockets", "polling"],
   });
-
-  socket.on("connect", () => {
-    console.log("socket connected!");
-  });
-
-  socket.on("poll_updated", (poll: Poll) => poll);
 
   return socket;
 };

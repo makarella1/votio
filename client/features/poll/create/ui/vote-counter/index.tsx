@@ -1,4 +1,4 @@
-import { createPollModel } from "@features/create-poll/model";
+import { createPollModel } from "@features/poll/create/model";
 import { Button } from "@shared/ui/button";
 import { useStore } from "effector-react";
 

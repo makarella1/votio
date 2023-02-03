@@ -6,3 +6,9 @@ export interface CookieParams {
   expires: Date;
   attributes?: Omit<Cookies.CookieAttributes, "expires">;
 }
+
+export interface TokenPayload {
+  sub: string;
+  name: string;
+  pollId: string;
+}

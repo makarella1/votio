@@ -1,19 +1,23 @@
-import { MAX_VOTES, MIN_VOTES } from "@features/create-poll/lib/constants";
-import { createPollModel } from "@features/create-poll/model";
 import { Button } from "@shared/ui/button";
 import { Input } from "@shared/ui/input";
 import { useForm } from "effector-forms";
 import React from "react";
 
-import { VoteCounter } from "./vote-counter";
+import { MAX_VOTES, MIN_VOTES } from "../../lib/constants";
+import { createPollModel } from "../../model";
+import { VoteCounter } from "../vote-counter";
 
-export const CreatePollForm = () => {
-  const { fields, eachValid, reset } = useForm(createPollModel.pollForm);
+interface CreatePollFormProps {
+  onSubmit: () => Promise<void>;
+}
+
+export const CreatePollForm = ({ onSubmit }: CreatePollFormProps) => {
+  const { fields, eachValid, reset } = useForm(createPollModel.form);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    createPollModel.createPoll();
+    onSubmit();
     reset();
   };
 

@@ -7,7 +7,7 @@ export const WaitingRoom = () => {
     const connectToRoom = async () => {
       const socket = await userModel.initializeConnectionFx();
 
-      // @ts-ignore
+      // @ts-expect-error bad typings for sockets
       pollModel.listenToPollUpdatesFx(socket);
     };
 
