@@ -1,4 +1,5 @@
 import { Button } from "@shared/ui/button";
+import { Form } from "@shared/ui/form";
 import { Input } from "@shared/ui/input";
 import { useForm } from "effector-forms";
 import React from "react";
@@ -22,10 +23,7 @@ export const CreatePollForm = ({ onSubmit }: CreatePollFormProps) => {
   };
 
   return (
-    <form
-      className="flex flex-col gap-10 text-center text-lg font-bold"
-      onSubmit={handleSubmit}
-    >
+    <Form onSubmit={handleSubmit}>
       <Input
         id="topic"
         label="What's the Poll's Topic?"
@@ -48,6 +46,6 @@ export const CreatePollForm = ({ onSubmit }: CreatePollFormProps) => {
       >
         Create a Poll!
       </Button>
-    </form>
+    </Form>
   );
 };

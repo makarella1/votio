@@ -31,10 +31,6 @@ export const listenToPollUpdatesFx = createEffect((socket: Socket) => {
 
 export const $poll = createStore<Poll | null>(null);
 
-$poll.watch((poll) => {
-  console.log(poll);
-});
-
 export const $createPollLoading = createPollFx.pending;
 export const $joinPollLoading = joinPollFx.pending;
 
@@ -43,6 +39,10 @@ const failed = merge([joinPollFx.fail, createPollFx.fail]);
 
 $poll.on(joinedOrCreated, (_, { data: { poll } }) => poll);
 $poll.on(pollUpdated, (_, updatedPoll) => updatedPoll);
+
+$poll.watch((poll) => {
+  console.log(poll);
+});
 
 sample({
   clock: joinedOrCreated,

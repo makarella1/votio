@@ -1,24 +1,48 @@
 import "./index.css";
 
+import { pollModel } from "@entities/poll/model";
+import { userModel } from "@entities/user/model";
 import { CreatePollPage } from "@pages/create-poll";
 import { JoinPollPage } from "@pages/join-poll";
 import { WaitingRoom } from "@pages/waiting-room";
 import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
+import { getTokenPayload } from "@shared/lib";
 import { cookies } from "@shared/lib/cookies";
 import { AnimatedRoute } from "@shared/ui/animated-route";
 import { Container } from "@shared/ui/container";
+import { useUnit } from "effector-react";
 import React from "react";
 import { Toaster } from "react-hot-toast";
+import { navigate } from "wouter/use-location";
 
 const App = () => {
-  React.useEffect(() => {
-    const token = cookies.get("accessToken");
+  const currentPoll = useUnit(pollModel.$poll);
+  const me = useUnit(userModel.$me);
 
-    if (token) {
-      const { sub, name, pollId } = cookies.getTokenPayload(token);
-    }
-  }, []);
+  React.useEffect(() => {
+    const reconnect = async () => {
+      const token = cookies.get("accessToken");
+
+      if (token) {
+        await userModel.initializeConnectionFx();
+
+        const { name, sub } = getTokenPayload(token);
+
+        userModel.setMe({
+          name,
+          id: sub,
+          isAdmin: sub === currentPoll?.adminId,
+        });
+
+        if (me?.id && !currentPoll?.hasStarted) {
+          navigate(Routes.WAITING_ROOM);
+        }
+      }
+    };
+
+    reconnect();
+  }, [me?.id, currentPoll?.hasStarted]);
 
   return (
     <>

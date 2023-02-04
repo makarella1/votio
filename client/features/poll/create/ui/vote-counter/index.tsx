@@ -1,6 +1,6 @@
 import { createPollModel } from "@features/poll/create/model";
 import { Button } from "@shared/ui/button";
-import { useStore } from "effector-react";
+import { useUnit } from "effector-react";
 
 interface VoteCounterProps {
   min: number;
@@ -8,7 +8,7 @@ interface VoteCounterProps {
 }
 
 export const VoteCounter = ({ min, max }: VoteCounterProps) => {
-  const votesPerVoter = useStore(createPollModel.$votesPerVoter);
+  const votesPerVoter = useUnit(createPollModel.$votesPerVoter);
 
   const handleVoteAdd = () => {
     createPollModel.voteAdded();

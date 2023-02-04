@@ -1,1 +1,1 @@
-export * as socket from "./requests";
+export * as socket from "./request";
