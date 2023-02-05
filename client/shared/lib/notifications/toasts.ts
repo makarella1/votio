@@ -3,8 +3,9 @@ import { toast } from "react-hot-toast";
 
 import { ShowToastParams } from "./types";
 
-export const showToastFx = createEffect(({ type }: ShowToastParams) =>
+export const showToast = ({ type, message }: ShowToastParams) =>
   type === "error"
-    ? toast.error("Something went wrong...")
-    : toast.success("Everything went smoothly!"),
-);
+    ? toast.error(message ?? "Something went wrong...")
+    : toast.success(message ?? "Everything went smoothly!");
+
+export const showToastFx = createEffect(showToast);

@@ -1,4 +1,5 @@
 import { cookies } from "@shared/lib/cookies";
+import { notifications } from "@shared/lib/notifications";
 import { io, Socket } from "socket.io-client";
 
 const HOST = import.meta.env.VITE_API_HOST as string;
@@ -13,6 +14,17 @@ export const getInstance = (): Socket => {
       token: cookies.get("accessToken"),
     },
     transports: ["websockets", "polling"],
+  });
+
+  socket.on("connect_error", () => {
+    notifications.showToast({
+      type: "error",
+      message: "Oops... Can't Connect to Your Previous Poll",
+    });
+  });
+
+  socket.on("exception", () => {
+    notifications.showToast({ type: "error" });
   });
 
   return socket;

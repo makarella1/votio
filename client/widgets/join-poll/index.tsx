@@ -2,7 +2,7 @@ import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { joinPollModel } from "@features/poll/join/model";
 import { JoinPollForm } from "@features/poll/join/ui/form";
-import { getTokenPayload } from "@shared/lib";
+import { getTokenPayload } from "@shared/lib/get-token-payload";
 import { Loader } from "@shared/ui/loader";
 import { useForm } from "effector-forms";
 import { useUnit } from "effector-react";

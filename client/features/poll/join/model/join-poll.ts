@@ -1,6 +1,6 @@
 import { pollModel } from "@entities/poll/model";
 import { redirect, Routes } from "@shared/config/router";
-import { rules } from "@shared/lib/validation-rules";
+import { rules } from "@shared/lib/form";
 import { createForm } from "effector-forms";
 
 import { JoinPollFields } from "../lib/types";

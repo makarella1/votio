@@ -7,8 +7,8 @@ import { JoinPollPage } from "@pages/join-poll";
 import { WaitingRoom } from "@pages/waiting-room";
 import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
-import { getTokenPayload } from "@shared/lib";
 import { cookies } from "@shared/lib/cookies";
+import { getTokenPayload } from "@shared/lib/get-token-payload";
 import { AnimatedRoute } from "@shared/ui/animated-route";
 import { Container } from "@shared/ui/container";
 import { useUnit } from "effector-react";
@@ -42,7 +42,7 @@ const App = () => {
     };
 
     reconnect();
-  }, [me?.id, currentPoll?.hasStarted]);
+  }, []);
 
   return (
     <>

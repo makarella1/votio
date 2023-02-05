@@ -40,10 +40,6 @@ const failed = merge([joinPollFx.fail, createPollFx.fail]);
 $poll.on(joinedOrCreated, (_, { data: { poll } }) => poll);
 $poll.on(pollUpdated, (_, updatedPoll) => updatedPoll);
 
-$poll.watch((poll) => {
-  console.log(poll);
-});
-
 sample({
   clock: joinedOrCreated,
   fn: ({ data: { accessToken } }): CookieParams => {
