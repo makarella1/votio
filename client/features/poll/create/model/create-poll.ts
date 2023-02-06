@@ -1,7 +1,8 @@
 import { pollModel } from "@entities/poll/model";
 import { redirect, Routes } from "@shared/config/router";
 import { rules } from "@shared/lib/form";
-import { combine, createEvent, createStore } from "effector";
+import { notifications } from "@shared/lib/notifications";
+import { combine, createEvent, createStore, sample } from "effector";
 import { createForm } from "effector-forms";
 
 import { AVG_VOTES, MAX_VOTES, MIN_VOTES } from "../lib/constants";
@@ -38,6 +39,22 @@ export const $pollData = combine(
   $votesPerVoter,
   (pollForm, votesPerVoter) => ({ ...pollForm, votesPerVoter }),
 );
+
+sample({
+  clock: pollModel.createPollFx.done,
+  target: notifications.showToastFx.prepend(() => ({
+    type: "success",
+    message: "Created Successfully!",
+  })),
+});
+
+sample({
+  clock: pollModel.createPollFx.fail,
+  target: notifications.showToastFx.prepend(() => ({
+    type: "error",
+    message: "Failed to Create!",
+  })),
+});
 
 redirect({
   clock: pollModel.createPollFx.done,

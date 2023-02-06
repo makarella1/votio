@@ -15,5 +15,5 @@ export const ColorizedText = ({ text }: ColorizedTextProps) => {
     ),
   );
 
-  return <p className="text-xl font-black">{colorized}</p>;
+  return <p className="text-2xl font-black">{colorized}</p>;
 };

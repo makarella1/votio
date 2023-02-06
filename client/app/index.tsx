@@ -11,31 +11,33 @@ import { cookies } from "@shared/lib/cookies";
 import { getTokenPayload } from "@shared/lib/get-token-payload";
 import { AnimatedRoute } from "@shared/ui/animated-route";
 import { Container } from "@shared/ui/container";
+import { Loader } from "@shared/ui/loader";
 import { useUnit } from "effector-react";
 import React from "react";
-import { Toaster } from "react-hot-toast";
 import { navigate } from "wouter/use-location";
 
-const App = () => {
-  const currentPoll = useUnit(pollModel.$poll);
-  const me = useUnit(userModel.$me);
+export const App = () => {
+  const loading = useUnit(pollModel.$rejoinPollLoading);
 
   React.useEffect(() => {
     const reconnect = async () => {
       const token = cookies.get("accessToken");
 
       if (token) {
-        await userModel.initializeConnectionFx();
-
         const { name, sub } = getTokenPayload(token);
+
+        const {
+          data: { adminId, hasStarted },
+        } = await pollModel.rejoinPollFx(token);
+        await userModel.initializeConnectionFx();
 
         userModel.setMe({
           name,
           id: sub,
-          isAdmin: sub === currentPoll?.adminId,
+          isAdmin: sub === adminId,
         });
 
-        if (me?.id && !currentPoll?.hasStarted) {
+        if (!hasStarted) {
           navigate(Routes.WAITING_ROOM);
         }
       }
@@ -43,6 +45,10 @@ const App = () => {
 
     reconnect();
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
@@ -60,7 +66,6 @@ const App = () => {
           <WaitingRoom />
         </AnimatedRoute>
       </Container>
-      <Toaster />
     </>
   );
 };

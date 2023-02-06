@@ -6,10 +6,11 @@ type ButtonType =
   | "primary"
   | "secondary"
   | "primary-outlined"
-  | "secondary-outlined";
+  | "secondary-outlined"
+  | "basic";
 
 interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  variant: ButtonType;
+  variant?: ButtonType;
   href?: string;
 }
 
@@ -24,7 +25,7 @@ export const Button = ({
     <button
       className={clsx(
         "flex cursor-pointer items-center justify-center rounded-xl border-2 p-6 font-bold transition-all duration-200 hover:shadow-xl",
-        "disabled:pointer-events-none disabled:border-black disabled:bg-white disabled:text-black disabled:opacity-50",
+        "disabled:pointer-events-none disabled:cursor-not-allowed disabled:border-black disabled:bg-white disabled:text-black disabled:opacity-50",
         className,
         variant === "primary-outlined" &&
           "border-primary bg-white text-primary hover:bg-primary hover:text-white",

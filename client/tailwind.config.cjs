@@ -5,7 +5,7 @@ module.exports = {
     extend: {
       animation: {
         gradient: "gradient 10s ease infinite",
-        appear: "appear 2s forwards",
+        appear: "appear 300ms forwards",
       },
       keyframes: {
         gradient: {
@@ -16,6 +16,14 @@ module.exports = {
           "50%": {
             "background-size": "200% 200%",
             "background-position": "right center",
+          },
+        },
+        appear: {
+          "0%": {
+            opacity: 0,
+          },
+          "100%": {
+            opacity: 1,
           },
         },
       },

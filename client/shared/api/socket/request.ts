@@ -16,13 +16,6 @@ export const getInstance = (): Socket => {
     transports: ["websockets", "polling"],
   });
 
-  socket.on("connect_error", () => {
-    notifications.showToast({
-      type: "error",
-      message: "Oops... Can't Connect to Your Previous Poll",
-    });
-  });
-
   socket.on("exception", () => {
     notifications.showToast({ type: "error" });
   });
