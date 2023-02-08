@@ -15,11 +15,9 @@ export const $nominationForm = createForm<NominationFields>({
   },
 });
 
-export const nominateFx = createEffect(
-  async ({ socket, text }: NominationParams) => {
-    socket.emit("nominate", { text });
-  },
-);
+export const nominateFx = createEffect(({ socket, text }: NominationParams) => {
+  socket.emit("nominate", { text });
+});
 
 sample({
   clock: nominateFx.done,

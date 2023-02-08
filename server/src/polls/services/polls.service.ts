@@ -61,7 +61,7 @@ export class PollsService {
     );
 
     return {
-      pool: joinedPoll,
+      poll: joinedPoll,
       accessToken,
     };
   }
