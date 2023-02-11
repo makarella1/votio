@@ -1,4 +1,7 @@
+import { userModel } from "@entities/user/model";
 import { Me } from "@entities/user/model/types";
+import { startVotingModel } from "@features/user/admin/start-voting";
+import { leaveModel } from "@features/user/leave";
 import { nominationModel } from "@features/user/nominate/model";
 import { modalModel } from "@shared/lib/modal";
 import { Button } from "@shared/ui/button";
@@ -36,6 +39,7 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
 
   const isVotersModalOpened = useUnit($isVotersModalOpened);
   const isNominationsModalOpened = useUnit($isNominationsModalOpened);
+  const userConnection = useUnit(userModel.$userConnection);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -80,7 +84,14 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
       />
       <div className="mx-auto flex w-1/2 flex-col gap-6">
         {me.isAdmin ? (
-          <Button className="w-full" variant="secondary">
+          <Button
+            className="w-full"
+            variant="secondary"
+            onClick={async () => {
+              // @ts-expect-error bad typings for sockets
+              await startVotingModel.startFx(userConnection.socket);
+            }}
+          >
             Start Voting
           </Button>
         ) : (
@@ -90,7 +101,14 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
             start the poll!
           </p>
         )}
-        <Button className="w-full" variant="primary">
+        <Button
+          className="w-full"
+          variant="primary"
+          onClick={async () => {
+            // @ts-expect-error bad typings for sockets
+            await leaveModel.leaveFx(userConnection.socket);
+          }}
+        >
           Leave Poll
         </Button>
       </div>

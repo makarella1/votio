@@ -4,7 +4,8 @@ import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { CreatePollPage } from "@pages/create-poll";
 import { JoinPollPage } from "@pages/join-poll";
-import { WaitingRoom } from "@pages/waiting-room";
+import { VotingPage } from "@pages/voting";
+import { WaitingRoomPage } from "@pages/waiting-room";
 import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
 import { cookies } from "@shared/lib/cookies";
@@ -29,6 +30,7 @@ export const App = () => {
         const {
           data: { adminId, hasStarted },
         } = await pollModel.rejoinPollFx(token);
+
         await userModel.initializeConnectionFx();
 
         userModel.setMe({
@@ -39,6 +41,8 @@ export const App = () => {
 
         if (!hasStarted) {
           navigate(Routes.WAITING_ROOM);
+        } else {
+          navigate(Routes.VOTING);
         }
       }
     };
@@ -63,7 +67,10 @@ export const App = () => {
           <JoinPollPage />
         </AnimatedRoute>
         <AnimatedRoute path={Routes.WAITING_ROOM}>
-          <WaitingRoom />
+          <WaitingRoomPage />
+        </AnimatedRoute>
+        <AnimatedRoute path={Routes.VOTING}>
+          <VotingPage />
         </AnimatedRoute>
       </Container>
     </>

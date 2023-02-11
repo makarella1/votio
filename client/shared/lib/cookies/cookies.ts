@@ -9,4 +9,8 @@ export const setCookieFx = createEffect(
   },
 );
 
+export const removeCookieFx = createEffect((name: string) => {
+  Cookies.remove(name);
+});
+
 export const get = (name: string) => Cookies.get(name);

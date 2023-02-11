@@ -3,4 +3,5 @@ export const Routes = {
   JOIN_POLL: "/join-poll",
   WELCOME: "/",
   WAITING_ROOM: "/waiting-room",
+  VOTING: "/voting",
 } as const;
