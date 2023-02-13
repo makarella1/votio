@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
-interface FlexBoxProps extends React.ComponentPropsWithoutRef<"div"> {
+interface FlexBoxProps extends React.ComponentPropsWithRef<"div"> {
   reverse?: boolean;
   emphasize?: boolean;
 }
@@ -11,6 +11,7 @@ export const FlexBox = ({
   children,
   emphasize,
   className,
+  ...props
 }: FlexBoxProps) => (
   <div
     className={clsx(
@@ -19,6 +20,7 @@ export const FlexBox = ({
       emphasize && "border-secondary shadow-lg",
       className,
     )}
+    {...props}
   >
     <div
       className={clsx(

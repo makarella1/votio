@@ -10,10 +10,8 @@ interface PollInfoProps {
 }
 
 export const PollInfo = ({ poll }: PollInfoProps) => (
-  <>
-    <div className="mb-6">
-      <h2 className="text-2xl font-black">{poll.topic}</h2>
-    </div>
+  <div>
+    <h2 className="mb-4 text-2xl font-black">{poll.topic}</h2>
     <div>
       <Button
         className="mx-auto w-1/2 py-2"
@@ -26,5 +24,5 @@ export const PollInfo = ({ poll }: PollInfoProps) => (
         <ClipboardDocumentIcon className="ml-10 h-10 w-10 text-primary" />
       </Button>
     </div>
-  </>
+  </div>
 );
