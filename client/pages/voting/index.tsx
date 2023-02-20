@@ -74,12 +74,8 @@ export const VotingPage = () => {
   };
 
   React.useEffect(() => {
-    if (poll.rankings?.[me.id as string]) {
-      setIds(poll.rankings[me.id as string]);
-    } else if (poll.nominations) {
-      setIds(Object.keys(poll.nominations));
-    }
-  }, [poll.rankings?.[me.id as string], poll.nominations]);
+    setIds(Object.keys(poll.nominations));
+  }, []);
 
   if (Object.keys(poll).length === 0 || !me.id) {
     return <Loader />;
@@ -133,13 +129,12 @@ export const VotingPage = () => {
           </SortableContext>
         </DndContext>
       </div>
-
       <Button
-        className="mt-auto"
         variant="primary"
+        className="mt-auto w-full"
         onClick={() => {
           const rankings = Array.from(
-            { length: poll.votesPerVoter - 1 },
+            { length: Object.keys(poll.nominations).length },
             (_, index) => ids[index],
           );
 
@@ -149,7 +144,6 @@ export const VotingPage = () => {
             rankings,
           });
         }}
-        disabled={!!poll.rankings[me.id]}
       >
         Submit Votes
       </Button>

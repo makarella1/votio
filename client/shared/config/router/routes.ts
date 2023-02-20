@@ -4,4 +4,5 @@ export const Routes = {
   WELCOME: "/",
   WAITING_ROOM: "/waiting-room",
   VOTING: "/voting",
+  RESULTS: "/results",
 } as const;

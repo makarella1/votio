@@ -4,21 +4,24 @@ import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { CreatePollPage } from "@pages/create-poll";
 import { JoinPollPage } from "@pages/join-poll";
+import { ResultsPage } from "@pages/results";
 import { VotingPage } from "@pages/voting";
 import { WaitingRoomPage } from "@pages/waiting-room";
 import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
 import { cookies } from "@shared/lib/cookies";
 import { getTokenPayload } from "@shared/lib/get-token-payload";
-import { AnimatedRoute } from "@shared/ui/animated-route";
 import { Container } from "@shared/ui/container";
 import { Loader } from "@shared/ui/loader";
+import { Route } from "@shared/ui/route";
 import { useUnit } from "effector-react";
 import React from "react";
 import { navigate } from "wouter/use-location";
 
 export const App = () => {
   const loading = useUnit(pollModel.$rejoinPollLoading);
+  const poll = useUnit(pollModel.$poll);
+  const me = useUnit(userModel.$me);
 
   React.useEffect(() => {
     const reconnect = async () => {
@@ -28,7 +31,7 @@ export const App = () => {
         const { name, sub } = getTokenPayload(token);
 
         const {
-          data: { adminId, hasStarted },
+          data: { adminId },
         } = await pollModel.rejoinPollFx(token);
 
         await userModel.initializeConnectionFx();
@@ -38,17 +41,29 @@ export const App = () => {
           id: sub,
           isAdmin: sub === adminId,
         });
-
-        if (!hasStarted) {
-          navigate(Routes.WAITING_ROOM);
-        } else {
-          navigate(Routes.VOTING);
-        }
       }
     };
 
     reconnect();
   }, []);
+
+  React.useEffect(() => {
+    if (me.id && !poll.hasStarted) {
+      navigate(Routes.WAITING_ROOM);
+    }
+  }, [me.id, poll.hasStarted]);
+
+  React.useEffect(() => {
+    if (me.id && poll.hasStarted) {
+      navigate(Routes.VOTING);
+    }
+  }, [me.id, poll.hasStarted]);
+
+  React.useEffect(() => {
+    if (me.id && poll.rankings[me.id]) {
+      navigate(Routes.RESULTS);
+    }
+  }, [me.id, poll.rankings]);
 
   if (loading) {
     return <Loader />;
@@ -57,21 +72,24 @@ export const App = () => {
   return (
     <>
       <Container>
-        <AnimatedRoute path={Routes.WELCOME}>
+        <Route path={Routes.WELCOME}>
           <WelcomePage />
-        </AnimatedRoute>
-        <AnimatedRoute path={Routes.CREATE_POLL}>
+        </Route>
+        <Route path={Routes.CREATE_POLL}>
           <CreatePollPage />
-        </AnimatedRoute>
-        <AnimatedRoute path={Routes.JOIN_POLL}>
+        </Route>
+        <Route path={Routes.JOIN_POLL}>
           <JoinPollPage />
-        </AnimatedRoute>
-        <AnimatedRoute path={Routes.WAITING_ROOM}>
+        </Route>
+        <Route path={Routes.WAITING_ROOM}>
           <WaitingRoomPage />
-        </AnimatedRoute>
-        <AnimatedRoute path={Routes.VOTING}>
+        </Route>
+        <Route path={Routes.VOTING}>
           <VotingPage />
-        </AnimatedRoute>
+        </Route>
+        <Route path={Routes.RESULTS}>
+          <ResultsPage />
+        </Route>
       </Container>
     </>
   );

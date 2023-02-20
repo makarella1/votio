@@ -1,13 +1,11 @@
 import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { leaveModel } from "@features/user/leave";
-import { Routes } from "@shared/config/router";
 import { Loader } from "@shared/ui/loader";
 import { WaitingRoom } from "@widgets/waiting-room";
 import { useUnit } from "effector-react";
 import React from "react";
 import { Poll } from "shared";
-import { navigate } from "wouter/use-location";
 
 export const WaitingRoomPage = () => {
   const me = useUnit(userModel.$me);
@@ -35,12 +33,6 @@ export const WaitingRoomPage = () => {
 
     leavePoll();
   }, [poll.voters]);
-
-  React.useEffect(() => {
-    if (poll.hasStarted) {
-      navigate(Routes.VOTING);
-    }
-  }, [poll.hasStarted]);
 
   if (pollLoading || Object.keys(poll).length === 0) {
     return <Loader />;
