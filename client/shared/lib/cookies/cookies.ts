@@ -5,7 +5,12 @@ import { CookieParams } from "./types";
 
 export const setCookieFx = createEffect(
   ({ name, value, expires, attributes }: CookieParams) => {
-    Cookies.set(name, value, { expires, ...attributes });
+    Cookies.set(name, value, {
+      expires,
+      secure: true,
+      sameSite: "strict",
+      ...attributes,
+    });
   },
 );
 

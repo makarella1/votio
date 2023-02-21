@@ -68,6 +68,10 @@ export class PollsGateway
 
     const connectedClientsCount = this.io.adapter.rooms?.get(pollId)?.size ?? 0;
 
+    if (connectedClientsCount === 0) {
+      await this.pollsService.deletePoll(pollId);
+    }
+
     this.logger.log(`Socket disconnected: ${client.id}`);
     this.logger.log(
       `Total clients that are connected to this room: ${connectedClientsCount}`,

@@ -14,6 +14,7 @@ export const request = async <T>(
       "Content-Type": "application/json",
     },
     mode: "cors",
+    credentials: "include",
     ...req,
   });
 

@@ -29,6 +29,7 @@ module.exports = {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-misused-promises": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
   },
