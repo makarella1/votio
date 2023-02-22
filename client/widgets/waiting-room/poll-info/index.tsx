@@ -12,9 +12,9 @@ interface PollInfoProps {
 export const PollInfo = ({ poll }: PollInfoProps) => (
   <div>
     <h2 className="mb-4 text-2xl font-black">{poll.topic}</h2>
-    <div>
+    <div className="mx-auto w-5/6 sm:w-1/2">
       <Button
-        className="mx-auto w-1/2 py-2"
+        className="mx-auto w-full py-2"
         onClick={async () => {
           await copyToClipboard(poll.id);
           showToast({ type: "success", message: "Copied" });

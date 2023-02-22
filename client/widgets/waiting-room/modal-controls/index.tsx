@@ -15,7 +15,7 @@ export const ModalControls = ({
   openNominationsModal,
   openVotersModal,
 }: ModalControlsProps) => (
-  <div className="mx-auto flex w-1/2 justify-between">
+  <div className="mx-auto flex w-5/6 justify-between sm:w-1/2">
     <Button
       className="flex-col"
       onClick={() => {

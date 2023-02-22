@@ -14,6 +14,7 @@ import { getTokenPayload } from "@shared/lib/get-token-payload";
 import { Container } from "@shared/ui/container";
 import { Loader } from "@shared/ui/loader";
 import { Route } from "@shared/ui/route";
+import { ProtectedRoute } from "@widgets/protected-route";
 import { useUnit } from "effector-react";
 import React from "react";
 import { navigate } from "wouter/use-location";
@@ -81,15 +82,15 @@ export const App = () => {
         <Route path={Routes.JOIN_POLL}>
           <JoinPollPage />
         </Route>
-        <Route path={Routes.WAITING_ROOM}>
+        <ProtectedRoute path={Routes.WAITING_ROOM} me={me}>
           <WaitingRoomPage />
-        </Route>
-        <Route path={Routes.VOTING}>
+        </ProtectedRoute>
+        <ProtectedRoute path={Routes.VOTING} me={me}>
           <VotingPage />
-        </Route>
-        <Route path={Routes.RESULTS}>
+        </ProtectedRoute>
+        <ProtectedRoute path={Routes.RESULTS} me={me}>
           <ResultsPage />
-        </Route>
+        </ProtectedRoute>
       </Container>
     </>
   );

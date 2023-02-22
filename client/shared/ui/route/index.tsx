@@ -5,10 +5,9 @@ import React from "react";
 import { CSSTransition } from "react-transition-group";
 import { Route as WouterRoute, useRoute } from "wouter";
 
-interface RouteProps extends React.PropsWithChildren {
+export interface RouteProps extends React.PropsWithChildren {
   path: RoutesTypes;
   children: React.ReactNode;
-  protected?: boolean;
 }
 
 export const Route = ({ path, children }: RouteProps) => {

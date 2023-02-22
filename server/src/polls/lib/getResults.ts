@@ -24,7 +24,8 @@ export const getResults = (
         n + 1,
       );
 
-      scores[nominationId] = (scores[nominationId] ?? 0) + voteWeight;
+      scores[nominationId] =
+        (scores[nominationId] ?? 0) + (voteWeight >= 0 ? voteWeight : 0);
     });
   });
 

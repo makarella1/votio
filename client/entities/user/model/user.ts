@@ -7,7 +7,9 @@ export const initializeConnectionFx = createEffect(() => socket.getInstance());
 
 export const $userConnection = createStore<UserConnection>({});
 
-export const $me = createStore<Me>({});
+export const resetMe = createEvent();
+
+export const $me = createStore<Me>({}).reset(resetMe);
 
 export const setMe = createEvent<Me>();
 

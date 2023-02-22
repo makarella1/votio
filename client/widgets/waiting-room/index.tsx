@@ -35,7 +35,7 @@ interface WaitingRoomProps {
 }
 
 export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
-  const { fields, reset } = useForm(nominationModel.$nominationForm);
+  const { fields, reset, eachValid } = useForm(nominationModel.$nominationForm);
 
   const isVotersModalOpened = useUnit($isVotersModalOpened);
   const isNominationsModalOpened = useUnit($isNominationsModalOpened);
@@ -62,7 +62,7 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
         isOpened={isNominationsModalOpened}
         close={closeNominationsModal}
       >
-        <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-10 sm:gap-20">
           <Form onSubmit={handleSubmit}>
             <Input
               label="Nomination"
@@ -70,7 +70,12 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
               value={fields.text.value}
               onChange={(event) => fields.text.onChange(event.target.value)}
             />
-            <Button variant="primary">Nominate!</Button>
+            <Button
+              variant="primary"
+              disabled={!(fields.text.isTouched && eachValid)}
+            >
+              Nominate!
+            </Button>
           </Form>
           <NominationsList nominations={poll.nominations} me={me} />
         </div>
@@ -82,7 +87,7 @@ export const WaitingRoom = ({ poll, me }: WaitingRoomProps) => {
         openNominationsModal={openNominationsModal}
         openVotersModal={openVotersModal}
       />
-      <div className="mx-auto flex w-1/2 flex-col gap-6">
+      <div className="mx-auto flex w-4/5 flex-col gap-6 sm:w-1/2">
         {me.isAdmin ? (
           <Button
             className="w-full"

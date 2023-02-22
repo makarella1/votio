@@ -16,12 +16,12 @@ export const Results = ({ poll, me }: ResultsPage) => {
 
   if (Object.keys(poll.results).length > 0) {
     return (
-      <div className="flex h-3/4 w-full flex-col justify-between text-center">
+      <div className="flex h-5/6 w-full flex-col justify-between text-center sm:h-3/4">
         <div>
           <h2 className="mb-1 text-4xl font-black">Results</h2>
           <h3 className="text-3xl font-bold">{poll.topic}</h3>
         </div>
-        <div>
+        <div className="h-1/2 overflow-auto">
           <div className="grid grid-cols-3 items-center border-b py-4">
             <p className="col-span-2 text-left font-bold">Candidate</p>
             <p className="col-span-1 text-right font-bold">Score</p>
@@ -53,7 +53,7 @@ export const Results = ({ poll, me }: ResultsPage) => {
 
   return (
     <>
-      <div className="flex h-3/4 w-full flex-col justify-evenly text-center">
+      <div className="flex h-5/6 w-full flex-col justify-evenly text-center sm:h-3/4">
         <div className="text-2xl">
           <span className="text-3xl font-bold text-primary">
             {Object.keys(poll.rankings).length}

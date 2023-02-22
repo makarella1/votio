@@ -57,7 +57,7 @@ export const SortableList = ({ poll, me }: SortableListProps) => {
 
   return (
     <>
-      <div className="flex flex-col gap-4">
+      <div className="flex h-2/3 flex-col gap-4 overflow-auto sm:h-1/2">
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
