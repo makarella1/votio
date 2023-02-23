@@ -12,13 +12,13 @@ async function bootstrap() {
 
   const configServcie = app.get(ConfigService);
   const port = parseInt(configServcie.get('PORT'));
-  const clientUrl = configServcie.get<string>('CLIENT_URL');
 
-  app.enableCors({
-    origin: ['votio-client.vercel.app'],
-  });
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new SocketIOAdapter(app, configServcie));
+
+  app.enableCors({
+    origin: [configServcie.get<string>('CLIENT_URL')],
+  });
 
   await app.listen(port);
 
