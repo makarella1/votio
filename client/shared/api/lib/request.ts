@@ -11,7 +11,6 @@ export const request = async <T>(
     headers: {
       "Content-Type": "application/json",
     },
-    mode: "cors",
     ...req,
   });
 
