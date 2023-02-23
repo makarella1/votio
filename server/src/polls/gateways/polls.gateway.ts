@@ -19,7 +19,7 @@ import { AddNominationDto, AddRankingsDto } from '../dto';
 
 @UseFilters(new WsCatchAllFilter())
 @UsePipes(new ValidationPipe())
-@WebSocketGateway({ namespace: 'polls' })
+@WebSocketGateway({ namespace: 'polls', cors: true })
 export class PollsGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
 {
