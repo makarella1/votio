@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common/pipes';
+import { ValidationPipe } from '@nestjs/common';
 import { Logger, UseFilters, UseGuards, UsePipes } from '@nestjs/common';
 import {
   WebSocketGateway,
