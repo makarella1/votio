@@ -1,9 +1,7 @@
 import { APIError, RequestResponse } from "./types";
 
 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-const BASE_URL = `http://${import.meta.env.VITE_API_HOST}:${parseInt(
-  import.meta.env.VITE_API_PORT,
-)}`;
+const BASE_URL = import.meta.env.VITE_API_URL as string;
 
 export const request = async <T>(
   endpoint: string,
