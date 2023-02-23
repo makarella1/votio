@@ -15,8 +15,7 @@ async function bootstrap() {
   const clientUrl = configServcie.get<string>('CLIENT_URL');
 
   app.enableCors({
-    origin: [`${clientUrl}`],
-    credentials: true,
+    origin: ['votio-client.vercel.app'],
   });
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new SocketIOAdapter(app, configServcie));
