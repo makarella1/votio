@@ -16,9 +16,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new SocketIOAdapter(app, configServcie));
 
-  app.enableCors({
-    origin: [configServcie.get<string>('CLIENT_URL')],
-  });
+  app.enableCors();
 
   await app.listen(port);
 
