@@ -15,7 +15,7 @@ async function bootstrap() {
   const clientUrl = configServcie.get<string>('CLIENT_URL');
 
   app.enableCors({
-    origin: [clientUrl],
+    origin: [`${clientUrl}`],
     credentials: true,
   });
   app.useGlobalPipes(new ValidationPipe());
