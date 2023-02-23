@@ -8,9 +8,9 @@ import { Button } from "@shared/ui/button";
 import { Form } from "@shared/ui/form";
 import { Input } from "@shared/ui/input";
 import { BottomSheetModal } from "@shared/ui/modal";
+import { Poll } from "@votio/shared";
 import { useForm } from "effector-forms";
 import { useUnit } from "effector-react";
-import { Poll } from "shared";
 
 import { ModalControls } from "./modal-controls";
 import { NominationsList } from "./nominations-list";

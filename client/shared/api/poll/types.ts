@@ -1,4 +1,4 @@
-import { Poll } from "shared";
+import { Poll } from "@votio/shared";
 
 export type CreatePollBody = Pick<Poll, "votesPerVoter" | "topic"> & {
   name: string;

@@ -3,8 +3,8 @@ import { Me } from "@entities/user/model/types";
 import { removeVoterModel } from "@features/user/admin/remove-voter/model";
 import { UserMinusIcon } from "@heroicons/react/24/solid";
 import { FlexBox } from "@shared/ui/flex-box";
+import { Poll } from "@votio/shared";
 import { useUnit } from "effector-react";
-import { Poll } from "shared";
 
 interface VotersListProps {
   voters: Poll["voters"];

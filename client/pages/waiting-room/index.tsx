@@ -2,10 +2,10 @@ import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { leaveModel } from "@features/user/leave";
 import { Loader } from "@shared/ui/loader";
+import { Poll } from "@votio/shared";
 import { WaitingRoom } from "@widgets/waiting-room";
 import { useUnit } from "effector-react";
 import React from "react";
-import { Poll } from "shared";
 
 export const WaitingRoomPage = () => {
   const me = useUnit(userModel.$me);

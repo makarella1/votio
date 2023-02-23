@@ -21,10 +21,10 @@ import { userModel } from "@entities/user/model";
 import { Me } from "@entities/user/model/types";
 import { Button } from "@shared/ui/button";
 import { FlexBox } from "@shared/ui/flex-box";
+import { Poll } from "@votio/shared";
 import clsx from "clsx";
 import { useUnit } from "effector-react";
 import React from "react";
-import { Poll } from "shared";
 
 import { SortableItem } from "../sortable-item";
 

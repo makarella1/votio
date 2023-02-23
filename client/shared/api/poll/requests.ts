@@ -1,4 +1,4 @@
-import { Poll } from "shared";
+import { Poll } from "@votio/shared";
 
 import { request } from "../lib/request";
 import { CreatePollBody, JoinPollBody, PollResponse } from "./types";

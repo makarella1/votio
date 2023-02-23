@@ -1,4 +1,4 @@
-import { Nominations, Results, Rankings } from 'shared';
+import { Nominations, Results, Rankings } from '@votio/shared';
 
 /* 
   Points for each vote will be calculated by the following formula: 

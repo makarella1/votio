@@ -1,9 +1,9 @@
 import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { Loader } from "@shared/ui/loader";
+import { Poll } from "@votio/shared";
 import { Voting } from "@widgets/voting";
 import { useUnit } from "effector-react";
-import { Poll } from "shared";
 
 export const VotingPage = () => {
   const poll = useUnit(pollModel.$poll);

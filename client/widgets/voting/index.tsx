@@ -1,5 +1,5 @@
 import { Me } from "@entities/user/model/types";
-import { Poll } from "shared";
+import { Poll } from "@votio/shared";
 
 import { SortableList } from "./sortable-list";
 

@@ -2,6 +2,7 @@ import { pollsApi } from "@shared/api/poll";
 import { CreatePollBody, JoinPollBody } from "@shared/api/poll/types";
 import { cookies } from "@shared/lib/cookies";
 import { CookieParams } from "@shared/lib/cookies/types";
+import { Poll } from "@votio/shared";
 import {
   combine,
   createEffect,
@@ -10,7 +11,6 @@ import {
   merge,
   sample,
 } from "effector";
-import { Poll } from "shared";
 import { Socket } from "socket.io";
 
 export const createPollFx = createEffect(

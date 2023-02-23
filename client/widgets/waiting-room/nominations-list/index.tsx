@@ -3,8 +3,8 @@ import { Me } from "@entities/user/model/types";
 import { removeNominationModel } from "@features/user/admin/remove-nomination/model";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import { FlexBox } from "@shared/ui/flex-box";
+import { Poll } from "@votio/shared";
 import { useUnit } from "effector-react";
-import { Poll } from "shared";
 
 interface NominationsListProps {
   nominations: Poll["nominations"];

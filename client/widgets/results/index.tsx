@@ -3,8 +3,8 @@ import { Me } from "@entities/user/model/types";
 import { closePollModel } from "@features/user/admin/close-poll";
 import { leaveModel } from "@features/user/leave";
 import { Button } from "@shared/ui/button";
+import { Poll } from "@votio/shared";
 import { useUnit } from "effector-react";
-import { Poll } from "shared";
 
 interface ResultsPage {
   poll: Poll;

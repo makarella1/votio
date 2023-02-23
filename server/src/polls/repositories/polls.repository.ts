@@ -8,7 +8,7 @@ import { ConfigService } from '@nestjs/config';
 import Redis from 'ioredis';
 
 import { IO_REDIS_KEY } from '../../redis/redis.module';
-import { Poll, Results } from 'shared';
+import { Poll, Results } from '@votio/shared';
 import {
   AddNominationData,
   AddRankingsData,

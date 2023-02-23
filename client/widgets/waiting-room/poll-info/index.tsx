@@ -3,7 +3,7 @@ import { copyToClipboard } from "@shared/lib/copy-to-clipboard";
 import { showToast } from "@shared/lib/notifications/toasts";
 import { Button } from "@shared/ui/button";
 import { ColorizedText } from "@shared/ui/colorized-text";
-import { Poll } from "shared";
+import { Poll } from "@votio/shared";
 
 interface PollInfoProps {
   poll: Poll;

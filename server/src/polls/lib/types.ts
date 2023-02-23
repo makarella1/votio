@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import { Nomination } from 'shared';
+import { Nomination } from '@votio/shared';
 import { Socket } from 'socket.io';
 
 export interface CreatePollData {
