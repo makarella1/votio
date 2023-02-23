@@ -4,6 +4,7 @@ import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { CreatePollPage } from "@pages/create-poll";
 import { JoinPollPage } from "@pages/join-poll";
+import { NotFoundPage } from "@pages/not-found";
 import { ResultsPage } from "@pages/results";
 import { VotingPage } from "@pages/voting";
 import { WaitingRoomPage } from "@pages/waiting-room";
@@ -11,12 +12,11 @@ import { WelcomePage } from "@pages/welcome";
 import { Routes } from "@shared/config/router";
 import { cookies } from "@shared/lib/cookies";
 import { getTokenPayload } from "@shared/lib/get-token-payload";
-import { Container } from "@shared/ui/container";
 import { Loader } from "@shared/ui/loader";
-import { Route } from "@shared/ui/route";
 import { ProtectedRoute } from "@widgets/protected-route";
 import { useUnit } from "effector-react";
 import React from "react";
+import { Route, Switch } from "wouter";
 import { navigate } from "wouter/use-location";
 
 export const App = () => {
@@ -71,28 +71,29 @@ export const App = () => {
   }
 
   return (
-    <>
-      <Container>
-        <Route path={Routes.WELCOME}>
-          <WelcomePage />
-        </Route>
-        <Route path={Routes.CREATE_POLL}>
-          <CreatePollPage />
-        </Route>
-        <Route path={Routes.JOIN_POLL}>
-          <JoinPollPage />
-        </Route>
-        <ProtectedRoute path={Routes.WAITING_ROOM} me={me}>
-          <WaitingRoomPage />
-        </ProtectedRoute>
-        <ProtectedRoute path={Routes.VOTING} me={me}>
-          <VotingPage />
-        </ProtectedRoute>
-        <ProtectedRoute path={Routes.RESULTS} me={me}>
-          <ResultsPage />
-        </ProtectedRoute>
-      </Container>
-    </>
+    <Switch>
+      <Route path={Routes.WELCOME}>
+        <WelcomePage />
+      </Route>
+      <Route path={Routes.CREATE_POLL}>
+        <CreatePollPage />
+      </Route>
+      <Route path={Routes.JOIN_POLL}>
+        <JoinPollPage />
+      </Route>
+      <ProtectedRoute path={Routes.WAITING_ROOM} me={me}>
+        <WaitingRoomPage />
+      </ProtectedRoute>
+      <ProtectedRoute path={Routes.VOTING} me={me}>
+        <VotingPage />
+      </ProtectedRoute>
+      <ProtectedRoute path={Routes.RESULTS} me={me}>
+        <ResultsPage />
+      </ProtectedRoute>
+      <Route>
+        <NotFoundPage />
+      </Route>
+    </Switch>
   );
 };
 

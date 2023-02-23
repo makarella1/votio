@@ -1,5 +1,6 @@
 import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
+import { Container } from "@shared/ui/container";
 import { Loader } from "@shared/ui/loader";
 import { Poll } from "@votio/shared";
 import { Results } from "@widgets/results";
@@ -13,5 +14,9 @@ export const ResultsPage = () => {
     return <Loader />;
   }
 
-  return <Results poll={poll as Poll} me={me} />;
+  return (
+    <Container>
+      <Results poll={poll as Poll} me={me} />
+    </Container>
+  );
 };

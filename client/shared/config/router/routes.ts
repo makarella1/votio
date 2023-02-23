@@ -5,4 +5,5 @@ export const Routes = {
   WAITING_ROOM: "/waiting-room",
   VOTING: "/voting",
   RESULTS: "/results",
+  NOT_FOUND: "*",
 } as const;

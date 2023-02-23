@@ -1,10 +1,10 @@
 import { Me } from "@entities/user/model/types";
 import { Routes } from "@shared/config/router";
-import { Route, RouteProps } from "@shared/ui/route";
-import { Redirect } from "wouter";
+import { Redirect, Route } from "wouter";
 
-interface ProtectedRouteProps extends RouteProps {
+interface ProtectedRouteProps extends React.PropsWithChildren {
   me: Me;
+  path: string;
 }
 
 export const ProtectedRoute = ({ path, children, me }: ProtectedRouteProps) => {

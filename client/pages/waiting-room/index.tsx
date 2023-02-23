@@ -1,6 +1,7 @@
 import { pollModel } from "@entities/poll/model";
 import { userModel } from "@entities/user/model";
 import { leaveModel } from "@features/user/leave";
+import { Container } from "@shared/ui/container";
 import { Loader } from "@shared/ui/loader";
 import { Poll } from "@votio/shared";
 import { WaitingRoom } from "@widgets/waiting-room";
@@ -38,5 +39,9 @@ export const WaitingRoomPage = () => {
     return <Loader />;
   }
 
-  return <WaitingRoom poll={poll as Poll} me={me} />;
+  return (
+    <Container>
+      <WaitingRoom poll={poll as Poll} me={me} />
+    </Container>
+  );
 };
