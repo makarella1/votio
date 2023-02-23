@@ -4,7 +4,6 @@ import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 import { ValidationPipe } from '@nestjs/common/pipes';
 import { SocketIOAdapter } from './polls/lib';
-import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const logger = new Logger('Main');
@@ -21,7 +20,6 @@ async function bootstrap() {
   });
   app.useGlobalPipes(new ValidationPipe());
   app.useWebSocketAdapter(new SocketIOAdapter(app, configServcie));
-  app.use(cookieParser());
 
   await app.listen(port);
 
